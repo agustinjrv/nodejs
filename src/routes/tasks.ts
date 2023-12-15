@@ -20,20 +20,11 @@ router
   });
 
 router.route("/list").get(async (req: Request, res: Response) => {
-  const tasks = await Task.find({});
-  const tasksModify = tasks.map((task) => {
-    return {
-      id: task._id,
-      title: task.title,
-      description: task.description,
-    };
-  });
-
-  res.render("tasks/list", { tasks: tasksModify });
+  const tasks = await Task.find().lean();
+  res.render("tasks/list", { tasks });
 });
 
 router.route("/delete/:id").get(async (req: Request, res: Response) => {
-  //console.log(req.params.id);
   await Task.findByIdAndDelete(req.params.id);
   res.redirect("/tasks/list");
 });
@@ -41,13 +32,8 @@ router.route("/delete/:id").get(async (req: Request, res: Response) => {
 router
   .route("/edit/:id")
   .get(async (req: Request, res: Response) => {
-    const task = await Task.findById(req.params.id);
-    const taskModify = {
-      id: task!._id,
-      title: task!.title,
-      description: task!.description,
-    };
-    res.render("tasks/edit", { task: taskModify });
+    const task = await Task.findById(req.params.id).lean();
+    res.render("tasks/edit", { task });
   })
   .post(async (req: Request, res: Response) => {
     const { title, description } = req.body;
