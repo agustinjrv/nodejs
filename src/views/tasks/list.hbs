@@ -1,0 +1,25 @@
+<div class="container">
+  <table class="table table-dark table-hover table-borderless table-sm w-50">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th colspan="2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each tasks}}
+        <tr>
+          <td>{{title}}</td>
+          <td>{{description}}</td>
+          <td><a href="/tasks/edit/{{id}}" class="btn btn-warning">Edit</a></td>
+          <td><a
+              href="/tasks/delete/{{id}}"
+              class="btn btn-danger"
+            >Delete</a></td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+</div>
